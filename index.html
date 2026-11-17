@@ -379,29 +379,16 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   <div class="wrap">
     <div class="head">
       <div><div class="num">01 · Примерка</div><h2>Какую тонировку <em>выбрать</em></h2></div>
-      <p class="sub">Нажмите процент — покажем, как потемнеют задние стёкла. Чем меньше процент, тем темнее плёнка. Лобовое и передние боковые по закону — только атермалка.</p>
+      <p class="sub">Нажмите процент — покажем его на стёклах. Чем меньше процент, тем темнее плёнка. По закону такие проценты — только на задние стёкла, на лобовое и передние — атермалка.</p>
     </div>
     <div class="carbox" data-rv="zoom">
-      <div class="photo scheme">
-        <svg viewBox="0 0 800 330" aria-hidden="true">
-          <defs><linearGradient id="gl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9dbe8"/><stop offset="1" stop-color="#7f97aa"/></linearGradient>
-          <linearGradient id="bd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a2a33"/><stop offset="1" stop-color="#121217"/></linearGradient></defs>
-          <ellipse cx="410" cy="300" rx="340" ry="14" fill="#000" opacity=".55"/>
-          <path d="M60,250 C60,215 85,200 120,195 L215,188 C260,150 300,118 360,108 L520,104 C575,104 615,130 660,180 L720,190 C748,195 760,215 760,240 L760,258 C760,266 754,270 746,270 L700,270 A55,55 0 0 0 590,270 L250,270 A55,55 0 0 0 140,270 L72,270 C64,270 60,264 60,256 Z" fill="url(#bd)" stroke="rgba(255,255,255,.18)" stroke-width="1.5"/>
-          <!-- стёкла: светлые, поверх — плёнка -->
-          <polygon points="238,188 296,138 356,122 408,119 408,188" fill="url(#gl)" opacity=".85"/>
-          <polygon points="420,119 510,117 548,124 600,168 612,188 420,188" fill="url(#gl)" opacity=".85"/>
-          <polygon id="wf" class="win" points="238,188 296,138 356,122 408,119 408,188" fill="#5b8fd6" fill-opacity="0"/>
-          <polygon id="wr" class="win" points="420,119 510,117 548,124 600,168 612,188 420,188" fill="#0a0b0d" fill-opacity=".93"/>
-          <line x1="414" y1="116" x2="414" y2="262" stroke="rgba(255,255,255,.14)" stroke-width="2"/>
-          <path d="M226,190 l18,-10 l6,12 z" fill="#1d1d24" stroke="rgba(255,255,255,.2)"/>
-          <rect x="330" y="206" width="34" height="6" rx="3" fill="rgba(255,255,255,.25)"/><rect x="500" y="206" width="34" height="6" rx="3" fill="rgba(255,255,255,.25)"/>
-          <path d="M732,206 l24,4 l0,16 l-28,-4 z" fill="#ff4d4d" opacity=".85"/>
-          <path d="M66,222 l40,-10 l4,14 l-44,6 z" fill="var(--acc)" opacity=".9"/>
-          <g fill="#0c0c10" stroke="#3a3a46" stroke-width="3"><circle cx="195" cy="270" r="44"/><circle cx="645" cy="270" r="44"/></g>
-          <g fill="#55555f"><circle cx="195" cy="270" r="20"/><circle cx="645" cy="270" r="20"/></g>
+      <!-- Фото-пример (Unsplash, свободная лицензия). Когда студия пришлёт своё фото машины до тонировки — заменить и перерисовать стёкла -->
+      <div class="photo"><img src="img/tint.jpg" alt="Седан сбоку — пример тонировки" loading="lazy" width="1410" height="470">
+        <svg viewBox="0 0 1410 470" preserveAspectRatio="none" aria-hidden="true">
+          <polygon id="wf" class="win" fill="#0a0b0d" fill-opacity=".93" points="502,162 522,134 558,100 610,85 722,75 722,166"/>
+          <polygon id="wr" class="win" fill="#0a0b0d" fill-opacity=".93" points="746,73 895,72 945,80 1015,142 1020,155 746,162"/>
         </svg>
-        <span class="tg l" id="lf">Передние: по ГОСТу</span><span class="tg r" id="lr">Задние: 5%</span></div>
+        <span class="tg l">Фото-пример</span><span class="tg r" id="lr">5%</span></div>
     </div>
     <div class="tabs" id="ttabs"></div>
     <div class="info"><div><b id="tt">5%</b><p id="td"></p><span class="law" id="tl"></span></div><a class="btn acc" href="#calc">Рассчитать цену →</a></div>
@@ -676,13 +663,14 @@ document.getElementById('plist').innerHTML=SVC.map(s=>`<div class="row" data-rv>
 document.querySelectorAll('[data-p]').forEach(el=>{const s=SVC.find(x=>x[0]===el.dataset.p);el.textContent=s&&s[1]?'от '+fmt(s[1])+' ₽':'цену назовём'});
 
 /* ===== TINT: примерка на схеме. [подпись, затемнение 0–1, что видно, что по закону, 1 = задние] ===== */
-(()=>{const T=[['5%',.93,'Салон не просматривается вообще','Можно на заднюю полусферу',1],['15%',.84,'Виден силуэт, но не лицо','Можно на заднюю полусферу',1],['20%',.77,'Видны черты лица сидящего внутри','Можно на заднюю полусферу',1],['35%',.62,'Салон хорошо виден, классический вариант','Можно на заднюю полусферу',1],['50%',.42,'Лёгкое затемнение, почти прозрачно','Можно на заднюю полусферу',1],['Атермалка',.3,'Почти прозрачная плёнка, не пропускает жару. Бывает с лёгким синим или зелёным оттенком','Можно на лобовое и передние по ГОСТу',0]];
+(()=>{const T=[['5%',.93,'Салон не просматривается вообще','Так можно только на задние стёкла',1],['15%',.84,'Виден силуэт, но не лицо','Так можно только на задние стёкла',1],['20%',.77,'Видны черты лица сидящего внутри','Так можно только на задние стёкла',1],['35%',.62,'Салон хорошо виден, классический вариант','Так можно только на задние стёкла',1],['50%',.42,'Лёгкое затемнение, почти прозрачно','Так можно только на задние стёкла',1],['Атермалка',.28,'Почти прозрачная плёнка, не пропускает жару. Бывает с лёгким синим или зелёным оттенком','Можно на лобовое и передние по ГОСТу',0]];
 const tabs=document.getElementById('ttabs'),wf=document.getElementById('wf'),wr=document.getElementById('wr');
 T.forEach((t,i)=>{const b=document.createElement('button');b.className=t[0].length>4?'wide':'';b.innerHTML=t[0]+'<small>'+(t[4]?'задние':'передние')+'</small>';b.onclick=()=>sel(i);tabs.appendChild(b)});
 const q=document.createElement('a');q.className='ask';q.target='_blank';q.rel='noopener';q.href=tg('Здравствуйте! Я с сайта. Помогите выбрать тонировку, моя машина: ');q.innerHTML='?<small>не знаю</small>';tabs.appendChild(q);
 function sel(i){const t=T[i];[...tabs.querySelectorAll('button')].forEach((b,j)=>b.classList.toggle('on',i===j));
- if(t[4]){wr.setAttribute('fill-opacity',t[1]);wf.setAttribute('fill-opacity',0);document.getElementById('lr').textContent='Задние: '+t[0];document.getElementById('lf').textContent='Передние: по ГОСТу'}
- else{wf.setAttribute('fill-opacity',t[1]);document.getElementById('lf').textContent='Передние: атермалка'}
+ /* проценты — тёмная плёнка на обоих стёклах фото; атермалка — лёгкий голубой оттенок */
+ [wf,wr].forEach(w=>{w.setAttribute('fill',t[4]?'#0a0b0d':'#5b8fd6');w.setAttribute('fill-opacity',t[1])});
+ document.getElementById('lr').textContent=t[0];
  document.getElementById('tt').textContent=t[0]+(t[4]?' светопропускания':'');document.getElementById('td').textContent=t[2];const l=document.getElementById('tl');l.textContent=t[3];l.className='law '+(t[4]?'back':'ok')}
 sel(0)})();
 
